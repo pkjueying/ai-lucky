@@ -39,8 +39,16 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
         # outputs.page_url will be available after deploy
+
+      - name: Show published URL
+        run: |
+          echo "Published site URL: ${{ steps.deployment.outputs.page_url }}"
+          echo "You can also find the Pages URL in the repository Settings → Pages or in the Actions run summary."
